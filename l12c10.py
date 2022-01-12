@@ -1,5 +1,5 @@
 from urllib.request import urlopen
-import os.system
+import os
 url = "https://bulldoghax.com/secret/spinner"
 page = urlopen(url)
 html_bytes=page.read()
@@ -17,4 +17,4 @@ number = htmlnumber.replace('div class="number">', " ").replace("<", " ").replac
 print(htmlnumber)
 print(number)
 
-os.system(f"curl -b 'timelock={number}'")
+os.system(f"curl -b 'timelock={number}' https://bulldoghax.com/secret/codes")
