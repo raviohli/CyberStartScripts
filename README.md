@@ -9,3 +9,4 @@ Bogdan.py = "Bogdan's Data"   - firstNum set to zero, secondNum set to firstNum 
 remote.py = "Remote Unlock"   - Get numbers, replace dots with spaces, split into three seperate strings, do the math, send back to server.
 post.py =   "Account Roulette"- The output is not good for this one. Yes, it is supposed to look like that. Program curls with a user ID that increments by one each loop. Watch carefully for output.
 l7c7DeveloperDisaster = "Developer Disaster" - Curls the URL with a UserID from 1-100. Gives immediate flag.
+MBPsphrse.py = "Passphrase Panic - converts wordNumbers list to seperate int values, then creaes a list out of the randomwords file and selects the values given from wordNumbers. A bit messy and overcomplicated.
