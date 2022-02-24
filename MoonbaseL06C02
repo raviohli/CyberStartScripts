@@ -1,0 +1,1 @@
+with open("/tmp/image.gif", "a") as f: f.write("alieneye")
