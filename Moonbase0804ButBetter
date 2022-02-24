@@ -1,0 +1,76 @@
+#
+# Connect to the  server at 'localhost', 10000 send any data,
+# the server will respond with the required word codes
+# You will find a passage of text in the file backdoor.txt write a script
+# which will use that text to build a message using the received word codes.
+# Each word code is sent on a new line and contains
+# paragraph_number, line_number, word_number
+# Send the expected words back to the server to retrieve the flag.
+# The server expects all the words in a single transmission.
+# The words should have punctuation stripped from them.
+# And the words should be separated by newline characters (\\n)
+#
+
+import socket
+
+final = ""
+
+####################################################### Splitting file into list of paragraphs
+
+file = open("backdoor.txt" , "r")
+filedata = str(file.read())
+paragraphlist = filedata.split("\n\n")  
+
+#######################################################
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect(('localhost', 10000))
+s.send(bytes("any data", "utf8"))
+
+#######################################################
+
+data = str(s.recv(1024)).replace("b'", "").replace("'", "").split("\\n")
+
+
+for item in data: # Iterate through data sent
+  print(item) # Prints a nice little list of what we need
+  temparray = item.replace(" ", "").split(",") # removes spaces then creates a new list containing three items with one number each
+  
+  if temparray[0] == "":
+    print("the stupid string has been destroyed", "\n") 
+    break
+    ######################################################### Setting number variables to use as indices later
+  else:
+    paragraphnum = int((temparray[0]))
+    paragraphnum -= 1
+    linenum = int((temparray[1]))
+    linenum -= 1 # subtract linenum by 1 so it works in a list
+    wordnum = int((temparray[2]))
+    wordnum -= 1
+    #########################################################
+    selectedparagraph = paragraphlist[paragraphnum]
+    #Line find and handle
+    
+   
+    linelist = selectedparagraph.split("\n") # Split paragraph into lines
+    selectedline = linelist[linenum]
+    ####################################################################
+    if "." in selectedline: selectedline = selectedline.replace(".", "") # remove punctuation
+    if "!" in selectedline: selectedline = selectedline.replace("!", "")
+    if '"' in selectedline: selectedline = selectedline.replace('"', "")
+    if "'" in selectedline: selectedline = selectedline.replace("'", "")
+    if "," in selectedline: selectedline = selectedline.replace(",", "")
+    ####################################################################
+    
+    wordlist = selectedline.split() # split selected line into word list
+    selectedword = wordlist[wordnum] # Selects word
+    selectedword = str(selectedword) 
+    print("this is the selected word!", selectedword, "\n")
+    final = final + selectedword + "\n"
+    
+    
+print(final, "Above will be transmitted")
+print("Sending...")
+s.send(bytes(final, "utf8"))
+print(s.recv(1024))
+  
