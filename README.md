@@ -1,2 +1,2 @@
 # CyberStartScripts
-i delete my scripts too much
+My personal set of CyberStart America scripts
